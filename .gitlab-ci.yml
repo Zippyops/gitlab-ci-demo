@@ -12,7 +12,7 @@ maven-build:
 
 deploy-master:
   rules:
-    - if: '$CI_COMMIT_BRANCH == master' 
+    - if: '$CI_COMMIT_BRANCH =~ /^master$/' 
   before_script:
     - apt-get update -qq && apt-get install -y -qq sshpass
   stage: deploy
