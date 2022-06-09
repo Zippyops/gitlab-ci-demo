@@ -11,6 +11,8 @@ maven-build:
       - target/gitlab-ci-demo.jar
 
 deploy-master:
+  variables:
+    HOST: "64.227.127.39"
   rules:
     - if: '$CI_COMMIT_BRANCH =~ /^master$/' 
   before_script:
@@ -19,6 +21,6 @@ deploy-master:
   script:
     - sshpass -V
     - export SSHPASS=$CI_USER_PASS
-    - sshpass -e scp -o StrictHostKeyChecking=no target/gitlab-ci-demo.jar gitlab-ci@167.172.188.139:/home/gitlab-ci
-    - sshpass -e ssh -tt -o StrictHostKeyChecking=no gitlab-ci@167.172.188.139 sudo mv /home/gitlab-ci/gitlab-ci-demo.jar /opt/java/webapps
-    - sshpass -e ssh -tt -o StrictHostKeyChecking=no gitlab-ci@167.172.188.139 sudo systemctl restart gitlab-ci-demo.service
+    - sshpass -e scp -o StrictHostKeyChecking=no target/gitlab-ci-demo.jar gitlab-ci@$HOST:/home/gitlab-ci
+    - sshpass -e ssh -tt -o StrictHostKeyChecking=no gitlab-ci@$HOST sudo mv /home/gitlab-ci/gitlab-ci-demo.jar /opt/java/webapps
+    - sshpass -e ssh -tt -o StrictHostKeyChecking=no gitlab-ci@$HOST sudo systemctl restart gitlab-ci-demo.service
